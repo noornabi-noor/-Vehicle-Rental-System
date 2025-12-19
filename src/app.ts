@@ -4,6 +4,7 @@ import path from "path";
 import initDB from "./config/db";
 import { userRoutes } from "./modules/users/user.routes";
 import { vehicleRoutes } from "./modules/vehicles/vehicles.routes";
+import { bookingRoutes } from "./modules/bookings/bookings.routes";
 
 
 dotenv.config({ path: path.join(process.cwd(), ".env") });
@@ -17,8 +18,8 @@ app.use(express.json());
 initDB();
 
 app.use("/v1/users", userRoutes);
-
 app.use("/v1/vehicles", vehicleRoutes);
+app.use("/v1/bookings", bookingRoutes)
 
 app.get('/', (req:Request, res:Response) => {
   res.send('Hello World!')
