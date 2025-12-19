@@ -10,17 +10,18 @@ export const pool = new Pool({
 const initDB = async () => {
   try {
     await pool.query(`
-      CREATE TABLE IF NOT EXISTS users(
+      CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
         name VARCHAR(150) NOT NULL,
-        email VARCHAR(200) NOT NULL,
-        password TEXT NOT NULL,
+        email VARCHAR(200) NOT NULL UNIQUE,
+        password TEXT NOT NULL CHECK (length(password) >= 6),
         role VARCHAR(100) NOT NULL,
         phone VARCHAR(15) NOT NULL,
         created_at TIMESTAMP DEFAULT NOW(),
         updated_at TIMESTAMP DEFAULT NOW()
-      )
+      );
     `);
+
     console.log("Users table created successfully.");
 
     // await pool.query(`
@@ -28,14 +29,13 @@ const initDB = async () => {
     //     id SERIAL PRIMARY KEY,
     //     user_id INT REFERENCES users(id) ON DELETE CASCADE,
     //     title VARCHAR(250) NOT NULL,
-    //     description TEXT, 
+    //     description TEXT,
     //     completed BOOLEAN DEFAULT false,
     //     due_date DATE,
     //     created_at TIMESTAMP DEFAULT NOW(),
     //     updated_at TIMESTAMP DEFAULT NOW()
     //   )
     // `);
-
 
     // console.log("Todos table created successfully.");
   } catch (err) {

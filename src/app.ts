@@ -15,7 +15,7 @@ app.use(express.json());
 
 initDB();
 
-app.use("/users", userRoutes);
+app.use("/v1/users", userRoutes);
 
 app.get('/', (req:Request, res:Response) => {
   res.send('Hello World!')
