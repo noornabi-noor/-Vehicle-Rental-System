@@ -16,8 +16,7 @@ const initDB = async () => {
         email VARCHAR(200) NOT NULL,
         password TEXT NOT NULL,
         role VARCHAR(100) NOT NULL,
-        phone VARCHAR(15) NOT NUL,
-        address TEXT,
+        phone VARCHAR(15) NOT NULL,
         created_at TIMESTAMP DEFAULT NOW(),
         updated_at TIMESTAMP DEFAULT NOW()
       )
@@ -38,7 +37,7 @@ const initDB = async () => {
     // `);
 
 
-    console.log("Todos table created successfully.");
+    // console.log("Todos table created successfully.");
   } catch (err) {
     console.error("Error creating tables:", err);
   }
