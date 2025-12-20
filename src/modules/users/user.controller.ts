@@ -60,31 +60,32 @@ const getSingleUser = async (req:Request, res:Response) => {
     }
 };
 
-const updateUser = async(req: Request, res: Response)=>{
-    try {
-      const {name, email, role, phone} = req.body;
 
-        const result = await userServices.updateUser(name, email, role, phone, req.params.userId as string);
+const updateUser = async (req: Request, res: Response) => {
+  try {
+    const { name, email, phone, role } = req.body;
+    const userId = req.params.userId;
 
-        if(result.rows.length === 0){
-            res.status(404).json({
-            success: false,
-            message: "User not found"
-        })
-        }
-        else{
-            res.status(200).json({
-                success: true,
-                message: "User updated successfully",
-                data: result.rows[0]
-            })
-        }
-    } catch (error:any) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        })
+    if (req.user?.role !== "admin" && req.user?.id !== Number(userId)) {
+      return res.status(403).json({ message: "Unauthorized" });
     }
+
+    const updatedRole = req.user?.role === "admin" ? role : undefined;
+
+    const result = await userServices.updateUser(name, email, role, phone, req.params.userId as string);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "User updated successfully",
+      data: result.rows[0]
+    });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
 };
 
 
