@@ -5,6 +5,7 @@ import initDB from "./config/db";
 import { userRoutes } from "./modules/users/user.routes";
 import { vehicleRoutes } from "./modules/vehicles/vehicles.routes";
 import { bookingRoutes } from "./modules/bookings/bookings.routes";
+import { authRoutes } from "./modules/auth/auth.routes";
 
 
 dotenv.config({ path: path.join(process.cwd(), ".env") });
@@ -20,6 +21,7 @@ initDB();
 app.use("/v1/users", userRoutes);
 app.use("/v1/vehicles", vehicleRoutes);
 app.use("/v1/bookings", bookingRoutes)
+app.use("/v1/auth", authRoutes);
 
 app.get('/', (req:Request, res:Response) => {
   res.send('Hello World!')
