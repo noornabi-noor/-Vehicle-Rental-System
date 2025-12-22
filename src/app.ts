@@ -2,9 +2,9 @@ import dotenv from "dotenv";
 import express, { Request, Response } from "express";
 import path from "path";
 import initDB from "./config/db";
+import { authRoutes } from "./modules/auth/auth.routes";
 import { userRoutes } from "./modules/users/user.routes";
 import { vehicleRoutes } from "./modules/vehicles/vehicles.routes";
-import { authRoutes } from "./modules/auth/auth.routes";
 import { bookingsRoutes } from "./modules/bookings/bookings.routes";
 
 
@@ -18,10 +18,11 @@ app.use(express.json());
 
 initDB();
 
-app.use("/v1/users", userRoutes);
-app.use("/v1/vehicles", vehicleRoutes);
-app.use("/v1/bookings", bookingsRoutes)
-app.use("/v1/auth", authRoutes);
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/vehicles", vehicleRoutes);
+app.use("/api/v1/bookings", bookingsRoutes)
+
 
 app.get('/', (req:Request, res:Response) => {
   res.send('Hello World!')
